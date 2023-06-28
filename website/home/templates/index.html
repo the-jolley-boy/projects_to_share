@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Home{% endblock title %}
+
+{% block content %}
+
+    <div class='bg-gray-50 dark:bg-slate-700 text-black dark:text-gray-100 text-center flex flex-col justify-center items-center h-[550px] md:h-[580px] lg:h-[600px]'>
+        <span class='my-2'> Hi, I'm Kian!</span>
+        <span style="font-family: Poppins-Bold" class='z-40 text-3xl font-extrabold md:text-4xl lg:text-5xl px-[20px] md:px-[140px] lg:px-[170px] xl:px-[200px] 2xl:px-[360px]'>
+            I'm a <span class='bg-clip-text bg-gradient-to-r from-cyan-300 to-blue-400 text-transparent'>Full Stack</span> developer. Welcome To My Webiste.
+        </span>
+
+        <div class='updn hero-img my-4'>
+            <img src="https://cdn.jsdelivr.net/gh/the-jolley-boy/static-files/static/spaceman.png" class='h-auto w-52 md:w-56 lg:w-60 xl:w-64'>
+            <div class='updn z-50 absolute flex justify-center items-center text-2xl bg-cyan-50 text-blue-700 rounded-full shadow-2xl -mt-40 xl:-mt-52 w-10 h-10'>
+                <i class="fa-brands fa-python"></i>
+            </div>
+            <div class='updn z-50 absolute flex justify-center items-center text-2xl bg-cyan-50 text-blue-700 rounded-full shadow-2xl -mt-20 ml-44 md:ml-52 md:-mt-24 xl:ml-60 xl:-mt-28 w-10 h-10'>
+                <i class="fa-brands fa-html5"></i>
+            </div>
+            <div class='updn z-50 absolute flex justify-center items-center text-2xl bg-cyan-50 text-blue-700 rounded-full shadow-2xl -mt-16 w-10 h-10'>
+                <i class="fa-brands fa-css3"></i>
+            </div>
+            <div class='updn z-50 absolute flex justify-center items-center text-2xl bg-cyan-50 text-blue-700 rounded-full shadow-2xl -mt-6 ml-20 md:-mt-6 md:ml-28 w-10 h-10'>
+                <i class="fa-brands fa-js"></i>
+            </div>
+            <div class='updn z-50 absolute flex justify-center items-center text-2xl bg-cyan-50 text-blue-700 rounded-full shadow-2xl -mt-52 ml-52 w-10 h-10'>
+                <i class="lni lni-postgresql"></i>
+            </div>
+        </div>
+
+        <div class='my-3 md:mt-2 font-bold text-sm md:text-[16px] md:leading-6'>
+            <ul class='flex flex-row gap-4 md:space-x-2'>
+                <a href='https://onedrive.live.com/download?cid=E71F315EEC029802&resid=E71F315EEC029802%2158311&authkey=AO4EGqXPZYWzamg&em=2' download>
+                <div class='relative group'>
+                    <div class='bg-gradient-to-r from-cyan-300 to-blue-600 px-6 py-2 rounded-md -inset-0.5 absolute blur-sm opacity-75 group-hover:-inset-1 transition group-hover:duration-400 group-hover:opacity-90 duration-1000'></div>
+                    <button class='relative bg-gray-100 dark:bg-gray-600 px-7 py-2 rounded-md transition duration-200'>Download CV</button>
+                </div></a>
+                <a href='/about'>
+                <div class='relative group'>
+                    <div class='bg-gradient-to-r from-cyan-300 to-blue-600 px-6 py-2 rounded-md -inset-0.5 absolute blur-sm opacity-75 group-hover:-inset-1 transition group-hover:duration-400 group-hover:opacity-90 duration-1000'></div>
+                    <button class='relative bg-gray-100 dark:bg-gray-600 px-7 py-2 rounded-md transition duration-200'>About me</button>
+                </div></a>
+            </ul>
+        </div>
+    </div>
+
+    <div class='rounded-lg shadow mx-4 bg-slate-400 dark:bg-slate-900 text-black dark:text-gray-100'>
+        <h1 style="font-family: Poppins-Bold" class='container mx-auto text-3xl mt-6 mb-4 px-6'>View My Latest Blog Posts.</h1>
+        <div class='grid grid-cols-1 gap-3 container pb-4 mx-auto mb-auto px-6'>
+            {% for post in posts %}
+                <a href="{% url 'blog_detail' post.slug%}" class="px-4 py-3 dark:text-white bg-gray-100 hover:bg-gray-200 dark:bg-gray-600 dark:hover:bg-gray-700 duration-200 rounded-lg drop-shadow-xl">
+                    <h3 class="text-2xl"> {{ post.title | slice:80 }} </h3>
+                    <br>
+                    <i class="fa-regular fa-calendar fa-lg" style="color: #1aa3e1;"></i>
+                    {{ post.created_on.date }} • 
+                    <i class="fa-solid fa-tag fa-lg" style="color: #1aa3e1;"></i> 
+                    {% for category in post.categories.all %}
+                        <span class='text-xs bg-gradient-to-r from-cyan-500 to-blue-500 py-1 px-4 rounded-full'> {{ category.name }}</span>
+                    {% endfor %}
+                    <br><br>
+                    <p>{{ post.body | slice:300 | safe }}...</p>
+                </a>
+            {% endfor %}
+        </div>
+
+        <div class='flex justify-center mb-3'>
+            <ul class='flex flex-row gap-4 md:space-x-2'>
+                <a href='/blogs'>
+                    <div class='relative group'>
+                        <div class='bg-gradient-to-r from-cyan-300 to-blue-600 px-6 mb-3 mt-2.5 rounded-md -inset-0.5 absolute blur-sm opacity-75 group-hover:-inset-1 transition group-hover:duration-400 group-hover:opacity-90 duration-1000'></div>
+                    <button class='relative bg-gray-100 dark:bg-gray-600 px-7 py-2 my-3 rounded-md transition duration-200'>Load more </button>
+                </div></a>
+            </ul>
+        </div>
+    </div>
+
+{% endblock %}

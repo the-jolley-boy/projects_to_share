@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ post.title }}{% endblock title %}
+
+{% block content %}
+<h1 style="font-family: Poppins-Bold" class='container mx-auto text-3xl mt-8 px-4'>{{ post.title }}</h1>
+<div class="container mx-auto mb-auto pb-3 px-4">
+    <div class="col-md-0">
+        <br>
+        <i class="fa-regular fa-calendar fa-lg" style="color: #1aa3e1;"></i>
+        {{ post.created_on.date }} • 
+        <i class="fa-solid fa-tag fa-lg" style="color: #1aa3e1;"></i> 
+        {% for category in post.categories.all %}
+            <span class='text-xs bg-gradient-to-r from-cyan-500 to-blue-500 py-1 px-4 rounded-full'><i class="fa-brands fa-python"></i> {{ category.name }}</span>
+
+        {% endfor %}
+        <br><br>
+    
+    </div>
+    <hr style="height:2px;border-width:0;color:#1aa3e1;background-color:#1aa3e1">
+    <br>
+    {{ post.body | safe}}
+    <br>
+    <hr style="height:2px;border-width:0;color:#1aa3e1;background-color:#1aa3e1">
+    <br>
+    <h3 class="font-bold underline">Leave a comment:</h3>
+    <form action="/blogs/blogpost/{{ post.slug }}/" method="post">
+        {% csrf_token %}
+        <div class="form-group text-black">
+            {{ form.author }}
+        </div>
+        <div class="form-group text-black">
+            {{ form.body }}
+        </div>
+        <button type="submit" class="btn btn-primary bg-gray-100 px-4 py-2 rounded-xl hover:bg-gray-300 duration-300 dark:bg-slate-600">Submit</button>
+    </form>
+    <br>
+    <hr style="height:2px;border-width:0;color:#1aa3e1;background-color:#1aa3e1">
+    <br>
+    <h3 class="font-bold underline">Comments:</h3>
+    <br>
+    {% for comment in comments %}
+    <p>
+        On {{comment.created_on.date }}&nbsp;
+        <b>{{ comment.author }}</b> wrote:
+    </p>
+    <p>{{ comment.body }}</p>
+    <hr>
+    {% endfor %}
+    <br>
+    <br>
+</div>
+<style> 
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        font-size: revert;
+        font-weight: revert;
+    }
+  
+    ol,
+    ul {
+        list-style: revert;
+        margin: revert;
+        padding: revert;
+    }
+    ol a,
+    ul a {
+        color: #67e8f9;
+        background: 
+          linear-gradient(to right, rgba(103,232,249, 1), rgba(59, 130, 246, 1)),
+          linear-gradient(to right, rgba(34,211,238, 1), rgba(59, 130, 246, 1), rgba(29, 78, 216, 1));
+        background-size: 100% 0.1em, 0 0.1em;
+        background-position: 100% 100%, 0 100%;
+        background-repeat: no-repeat;
+        transition: background-size 400ms;
+    }
+    ol a:hover,
+    ol a:focus {
+        background-size: 0 0.1em, 100% 0.1em;
+    }
+    ul a:hover,
+    ul a:focus {
+        background-size: 0 0.1em, 100% 0.1em;
+    }
+    p a {
+        color: #67e8f9;
+        background: 
+          linear-gradient(to right, rgba(103,232,249, 1), rgba(59, 130, 246, 1)),
+          linear-gradient(to right, rgba(34,211,238, 1), rgba(59, 130, 246, 1), rgba(29, 78, 216, 1));
+        background-size: 100% 0.1em, 0 0.1em;
+        background-position: 100% 100%, 0 100%;
+        background-repeat: no-repeat;
+        transition: background-size 400ms;
+    }
+      
+    p a:hover,
+    p a:focus {
+        background-size: 0 0.1em, 100% 0.1em;
+    }
+    p img {
+        border-radius: 8px;
+    }
+</style>
+{% endblock %}

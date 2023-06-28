@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ project.title }}{% endblock title %}
+
+{% block content %}
+<h1 style="font-family: Poppins-Bold" class='container mx-auto text-3xl mt-8 px-4'>{{ project.title }}</h1>
+<div class="container mx-auto mb-auto pb-3 px-4">
+    <div class="col-md-0">
+        <br>
+        <i class="detail-class fa-solid fa-tag fa-lg" style="color: #1aa3e1;"></i> 
+        {% for category in project.categories.all %}
+            <span class='text-xs bg-gradient-to-r from-cyan-500 to-blue-500 py-1 px-4 rounded-full'> {{ category.name }}</span>
+        {% endfor %}
+        <br><br>
+        <hr style="height:2px;border-width:0;color:#1aa3e1;background-color:#1aa3e1">
+        <br>
+        <h5 class="font-bold text-xl">About the project</h5>
+        <p class="mt-2">{{ project.description | safe }}</p>
+    </div>
+</div>
+<style> 
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        font-size: revert;
+        font-weight: revert;
+    }
+    ol,
+    ul {
+        list-style: revert;
+        margin: revert;
+        padding: revert;
+    }
+    ol a,
+    ul a {
+        color: #67e8f9;
+        background: 
+          linear-gradient(to right, rgba(103,232,249, 1), rgba(59, 130, 246, 1)),
+          linear-gradient(to right, rgba(34,211,238, 1), rgba(59, 130, 246, 1), rgba(29, 78, 216, 1));
+        background-size: 100% 0.1em, 0 0.1em;
+        background-position: 100% 100%, 0 100%;
+        background-repeat: no-repeat;
+        transition: background-size 400ms;
+    }
+    ol a:hover,
+    ol a:focus {
+        background-size: 0 0.1em, 100% 0.1em;
+    }
+    ul a:hover,
+    ul a:focus {
+        background-size: 0 0.1em, 100% 0.1em;
+    }
+    p a {
+        color: #67e8f9;
+        background: 
+          linear-gradient(to right, rgba(103,232,249, 1), rgba(59, 130, 246, 1)),
+          linear-gradient(to right, rgba(34,211,238, 1), rgba(59, 130, 246, 1), rgba(29, 78, 216, 1));
+        background-size: 100% 0.1em, 0 0.1em;
+        background-position: 100% 100%, 0 100%;
+        background-repeat: no-repeat;
+        transition: background-size 400ms;
+    }
+      
+    p a:hover,
+    p a:focus {
+        background-size: 0 0.1em, 100% 0.1em;
+    }
+    p img {
+        border-radius: 8px;
+    }
+</style>
+{% endblock %}

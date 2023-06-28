@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block title %}Contact{% endblock title %}
+
+{% block content %}
+<div class='rounded-lg shadow mx-4 bg-slate-400 dark:bg-slate-900 text-black dark:text-gray-100'>
+    <p style="font-family: Poppins-Bold" class='container mx-5 text-4xl mt-6 mb-4'>Contact</p>
+
+    {% if messages %}
+    <div class="messages grid place-content-center">
+        {% for message in messages %}
+        <div{% if message.tags %} class="{{ message.tags }} bg-slate-700 py-3 px-5 mx-5 rounded-lg flex items-center justify-center text-sm md:text-base"{% endif %}>
+            <p class=''><i class="fa-regular fa-bell"></i> {{ message }}</p>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <form class='flex-col p-5' action="/contact/" name="contactForm" method="POST" onsubmit="return validateForm()">
+        {% csrf_token %}
+        <div class='name'>
+            <label for="name">Name</label><br>
+            <input class='p-3 w-full my-2 bg-gray-50 border-slate-700 rounded-lg text-black' type="text" id="name" placeholder="Your Name" name="name">
+        </div>
+        <div class='email'>
+            <label for="email">Email</label><br>
+            <input class='p-3 w-full my-2 bg-gray-50 border-slate-700 rounded-lg text-black' type="text" id="email" placeholder="Your Email" name="email">
+        </div>
+        <div class='phone'>
+            <label for="phone">Phone</label><br>
+            <input class='p-3 w-full my-2 bg-gray-50 border-slate-700 rounded-lg text-black' type="text" id="phone" placeholder="Your Phone Number" name="phone">
+        </div>
+        <div class='message'>
+            <label for="message">Message</label><br>
+            <textarea class='p-3 w-full h-72 my-2 bg-gray-50 border-slate-700 rounded-lg text-black' placeholder="Message" name="message"></textarea>
+        </div>
+        <ul class='flex flex-row gap-4 md:space-x-2'>
+            <div class='relative group'>
+                <div class='bg-gradient-to-r from-cyan-300 to-blue-600 mb-3 mt-2.5 rounded-md -inset-0.5 absolute blur-sm opacity-75 group-hover:-inset-1 transition group-hover:duration-400 group-hover:opacity-90 duration-1000'></div>
+                <button type="submit" class='relative bg-gray-100 dark:bg-gray-600 px-6 py-2 my-3 rounded-md transition duration-200'>Send</button>
+            </div>
+        </ul>
+    </form>
+</div>
+
+{% endblock %}

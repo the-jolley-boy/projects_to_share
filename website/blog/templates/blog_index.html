@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Blogs{% endblock title %}
+
+{% block content %}
+<h1 style="font-family: Poppins-Bold" class='container mx-auto text-3xl my-8 px-4'>Browse My Blogs Here.</h1>
+<div class="grid grid-cols-1 gap-3 container mx-auto mb-auto pb-3 px-4">
+    {% for post in posts %}
+        <a href="{% url 'blog_detail' post.slug %}" class="px-4 py-3 dark:text-white bg-gray-100 hover:bg-gray-200 dark:bg-gray-600 dark:hover:bg-gray-700 duration-200 rounded-lg drop-shadow-xl">
+            <h3 class="text-2xl" style="color: #1aa3e1;"> {{ post.title }} </h3>
+            <br>
+            <i class="fa-regular fa-calendar fa-lg" style="color: #1aa3e1;"></i>
+            {{ post.created_on.date }} • 
+            <i class="fa-solid fa-tag fa-lg" style="color: #1aa3e1;"></i> 
+            {% for category in post.categories.all %}
+                <span class='text-xs bg-gradient-to-r from-cyan-500 to-blue-500 py-1 px-4 rounded-full'> {{ category.name }}</span>
+            {% endfor %}
+            <br><br>
+            <p>{{ post.body | slice:300 | safe }}...</p>
+        </a>
+    {% endfor %}
+</div>
+{% endblock %}
