@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Notify{% endblock title %}
+
+{% block content %}
+<div class="grid grid-cols-2 gap-3 container mx-auto mb-auto pb-3 px-4">
+    <a href="{% url 'oauth2_login' %}?intended_page=/notify/staff_data/" class="px-4 py-3 dark:text-white bg-gray-100 hover:bg-gray-200 dark:bg-gray-600 dark:hover:bg-gray-700 duration-200 rounded-lg drop-shadow-xl">
+        <h3 class="text-2xl" style="color: #1aa3e1;">Staff Data</h3>
+        <br>
+        <p>Contains staff data for many channels in Notify.</p>
+        <p>Will need Discord OAuth and be Notify staff to access.</p>
+        <br>
+    </a>
+    <a href="{% url 'betting' %}" class="px-4 py-3 dark:text-white bg-gray-100 hover:bg-gray-200 dark:bg-gray-600 dark:hover:bg-gray-700 duration-200 rounded-lg drop-shadow-xl">
+        <h3 class="text-2xl" style="color: #1aa3e1;">Notify Betting Returns</h3>
+        <br>
+        <p>Contains updated data on Notify betting staff calls.</p>
+        <br>
+    </a>
+    <a href="{% url 'release_channel_generator' %}" class="px-4 py-3 dark:text-white bg-gray-100 hover:bg-gray-200 dark:bg-gray-600 dark:hover:bg-gray-700 duration-200 rounded-lg drop-shadow-xl">
+        <h3 class="text-2xl" style="color: #1aa3e1;">Notify Release Channel Generator</h3>
+        <br>
+        <p>Used to generate release channel guides.</p>
+        <p>Will need Discord OAuth and be Notify staff to access the pages inside this page.</p>
+        <br>
+    </a>
+    <a class="px-4 py-3 dark:text-white bg-gray-100 hover:bg-gray-200 dark:bg-gray-600 dark:hover:bg-gray-700 duration-200 rounded-lg drop-shadow-xl">
+        <h3 class="text-2xl" style="color: #1aa3e1;">Coming Soon</h3>
+        <br>
+        <br>
+    </a>
+</div>
+{% endblock %}

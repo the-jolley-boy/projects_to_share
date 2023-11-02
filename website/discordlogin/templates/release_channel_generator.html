@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Guide Generator{% endblock title %}
+
+{% block content %}
+<div class="grid grid-cols-3 gap-3 container mx-auto mb-auto pb-3 px-4">
+    <a href="{% url 'oauth2_login' %}?intended_page=/notify/release_channel_generator/weekly_calendar/" class="px-4 py-3 dark:text-white bg-gray-100 hover:bg-gray-200 dark:bg-gray-600 dark:hover:bg-gray-700 duration-200 rounded-lg drop-shadow-xl">
+        <h3 class="text-2xl" style="color: #1aa3e1;">Weekly Calendar</h3>
+        <br>
+        <p>Used to write weekly calendars.</p>
+        <br>
+    </a>
+    <a href="{% url 'oauth2_login' %}?intended_page=/notify/release_channel_generator/monthly_calendar/" class="px-4 py-3 dark:text-white bg-gray-100 hover:bg-gray-200 dark:bg-gray-600 dark:hover:bg-gray-700 duration-200 rounded-lg drop-shadow-xl">
+        <h3 class="text-2xl" style="color: #1aa3e1;">Monthly Calendar</h3>
+        <br>
+        <p>Used to write monthly calendars.</p>
+        <br>
+    </a>
+    <a href="{% url 'oauth2_login' %}?intended_page=/notify/release_channel_generator/release_intro/" class="px-4 py-3 dark:text-white bg-gray-100 hover:bg-gray-200 dark:bg-gray-600 dark:hover:bg-gray-700 duration-200 rounded-lg drop-shadow-xl">
+        <h3 class="text-2xl" style="color: #1aa3e1;">Release Intro</h3>
+        <br>
+        <p>Used for sneaker release intros.</p>
+        <br>
+    </a>
+    <a href="{% url 'betting' %}" class="px-4 py-3 dark:text-white bg-gray-100 hover:bg-gray-200 dark:bg-gray-600 dark:hover:bg-gray-700 duration-200 rounded-lg drop-shadow-xl">
+        <h3 class="text-2xl" style="color: #1aa3e1;">Notify Betting Returns</h3>
+        <br>
+        <p>Contains updated data on Notify betting staff calls.</p>
+        <br>
+    </a>
+    <a href="{% url 'oauth2_login' %}?intended_page=/notify/release_channel_generator/" class="px-4 py-3 dark:text-white bg-gray-100 hover:bg-gray-200 dark:bg-gray-600 dark:hover:bg-gray-700 duration-200 rounded-lg drop-shadow-xl">
+        <h3 class="text-2xl" style="color: #1aa3e1;">Notify Release Channel Generator</h3>
+        <br>
+        <p>Used to generate release channel guides.</p>
+        <br>
+    </a>
+    <a class="px-4 py-3 dark:text-white bg-gray-100 hover:bg-gray-200 dark:bg-gray-600 dark:hover:bg-gray-700 duration-200 rounded-lg drop-shadow-xl">
+        <h3 class="text-2xl" style="color: #1aa3e1;">Coming Soon</h3>
+        <br>
+        <br>
+    </a>
+</div>
+{% endblock %}

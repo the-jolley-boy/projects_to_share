@@ -1783,9 +1783,9 @@ async def question5_welcomes(user, userID):
 @Client.event
 async def on_guild_channel_delete(ch):
 
-    guild = Client.get_guild(570142274902818816)
+    guild = Client.get_guild(REDACTED)
 
-    if ch.category_id == 570248275374899200:
+    if ch.category_id == REDACTED:
 
         chid = ch.id
         uid = ""
@@ -1833,7 +1833,7 @@ async def on_guild_channel_delete(ch):
         else:
             print("ticket made when bot/survey was not setup. (Support Tickets)")
 
-    if ch.category_id == 1084368328673476608 or ch.category_id == 1086427580166590514 or ch.category_id == 1087054788300124311:
+    if ch.category_id == REDACTED or ch.category_id == REDACTED or ch.category_id == REDACTED:
 
         chid = ch.id
         uid = ""
@@ -1889,7 +1889,7 @@ async def on_guild_channel_delete(ch):
 async def brandNew_callback(interaction):
     await interaction.response.edit_message(view = None)
 
-    embedVar = discord.Embed(title="REDACTED", description="""REDACTED""", color=0xDB0B23)
+    embedVar = discord.Embed(title="Newbie", description="""How exciting! Just getting into reselling is an awesome feeling. I know joining a reselling group can be slightly overwhelming with all the channels but rest assured, we are here to help. Our goal is to have you leaving after the 48 hours fully confident navigating our servers and understanding what we offer.""", color=0xDB0B23)
     await setFooter(embedVar)
 
     await interaction.channel.send( embed=embedVar)
@@ -1897,7 +1897,7 @@ async def brandNew_callback(interaction):
 async def beginner_callback(interaction):
     await interaction.response.edit_message(view = None)
 
-    embedVar = discord.Embed(title="REDACTED", description="""REDACTED""", color=0xDB0B23)
+    embedVar = discord.Embed(title="Beginner", description="""We're glad you joined Notify to continue your craft! Although you're not completely new to reselling and your knowledge may be limited,  we want to get you on the right path to accel your reselling career. Our goal is to have you leaving after the 48 hours fully confident navigating our servers and understanding what we offer.""", color=0xDB0B23)
     await setFooter(embedVar)
 
     await interaction.channel.send( embed=embedVar)
@@ -1905,7 +1905,7 @@ async def beginner_callback(interaction):
 async def intermediate_callback(interaction):
     await interaction.response.edit_message(view = None)
 
-    embedVar = discord.Embed(title="REDACTED", description="""REDACTED""", color=0xDB0B23)
+    embedVar = discord.Embed(title="Intermediate", description="""Notify is happy to have you and excited to help your business take off! With your prior knowledge, you might know your way around most group and channels. However, we know the layout differs from group to group. We want to take this 48 hours to make sure you fully understand what we have and where channels are located.""", color=0xDB0B23)
     await setFooter(embedVar)
 
     await interaction.channel.send( embed=embedVar)
@@ -1913,7 +1913,7 @@ async def intermediate_callback(interaction):
 async def advanced_callback(interaction):
     await interaction.response.edit_message(view = None)
 
-    embedVar = discord.Embed(title="REDACTED", description="""REDACTED""", color=0xDB0B23)
+    embedVar = discord.Embed(title="Advanced", description="""You've joined the best! Were happy you chose to bring your talents to Notify! If you want a quick run down of the channels, we're more than happy to do that for you. We dont want to bore you with the small talk since you already have most the knowledge. But if there is anything we can help you with to make your transition to Notify easier, please let us know.""", color=0xDB0B23)
     await setFooter(embedVar)
 
     await interaction.channel.send( embed=embedVar)
@@ -1924,29 +1924,31 @@ async def advanced_callback(interaction):
 #
 ####################################################################################################
 
-brandNewButton = Button(label = "Newbie", style = discord.ButtonStyle.grey, emoji = "🆕")
-beginnerButton = Button(label = "Beginner", style = discord.ButtonStyle.grey, emoji = "🚶")
-intermediateButton = Button(label = "Intermediate", style = discord.ButtonStyle.grey, emoji = "🏃")
-advancedButton = Button(label = "Advanced", style = discord.ButtonStyle.grey, emoji = "🏆")
+customizeButton = Button(label = "Customize Channels", style = discord.ButtonStyle.grey, emoji = "⭐", url = "REDACTED")
+supportButton = Button(label = "Personalized Support", style = discord.ButtonStyle.grey, emoji = "🧠", url = "REDACTED")
+jumpstartButton = Button(label = "Getting Started", style = discord.ButtonStyle.grey, url = "REDACTED")
 
 @Client.event
 async def on_member_join(member):
 
-    guild = Client.get_guild(570142274902818816)
+    guild = Client.get_guild(REDACTED)
     user = member
-    dooleyId = str("REDACTED")
+    dooleyId = str(REDACTED)
+    endlessID = str(REDACTED)
     dooley = await Client.fetch_user(dooleyId)
-    kianId = str("REDACTED")
+    endless = await Client.fetch_user(endlessID)
+    kianId = str(REDACTED)
     kian = await Client.fetch_user(kianId)
-    cat = discord.utils.get(guild.categories, id = 1084368328673476608)
-    cat2 = discord.utils.get(guild.categories, id = 1086427580166590514)
-    cat3 = discord.utils.get(guild.categories, id = 1087054788300124311)
+    cat = discord.utils.get(guild.categories, id = REDACTED)
+    cat2 = discord.utils.get(guild.categories, id = REDACTED)
+    cat3 = discord.utils.get(guild.categories, id = REDACTED)
 
     overwrites = {
                         guild.default_role: discord.PermissionOverwrite(read_messages=False),
                         guild.me: discord.PermissionOverwrite(read_messages=True, send_messages=True),
                         user: discord.PermissionOverwrite(read_messages=True, send_messages=True),
                         dooley: discord.PermissionOverwrite(read_messages=True, manage_channels=True),
+                        endless: discord.PermissionOverwrite(read_messages=True, manage_channels=True),
                         kian: discord.PermissionOverwrite(read_messages=True, manage_channels=True),
                     }
 
@@ -1966,19 +1968,24 @@ async def on_member_join(member):
                         logging.info("Error, exception 3: " + str(e))
                         print("Error, final exception: " + str(e))
 
-    sendEmbed = discord.Embed(title="Welcome " + str(user.name) + " 👋", description="""REDACTED""", color=0xDB0B23)
+    # \n**To help us better understand your level of experience, please select the button below that corresponds to your reselling expertise:**
+    # \n> 🆕**Newbie:** Welcome to your first reselling group! You're starting with a clean slate and have no prior knowledge of what these groups offer. Don't worry, we'll teach you everything from the basics.
+    # \n> 🚶**Beginner:** You've dabbled in reselling before but want to take things a little more seriously. You understand the basics of what reselling groups offer and are ready to learn more.
+    # \n> 🏃**Intermediate:** You have a fair amount of reselling experience and are knowledgeable of what reselling groups offer. You're ready to take your business to the next level and we're here to help you get there.
+    # \n> 🏆**Advanced:** You're a reselling pro with extensive knowledge of what reselling groups offer. You've gained immense experience through various avenues and don't need much guidance. You're just looking to enjoy the most elite reselling group around."""
+
+    sendEmbed = discord.Embed(title="Welcome " + str(user.name) + " 👋", description="""
+                                \nOur <@&570142915326771218> is always here:\n`•` Customize the channels you see <#1091086648734916758>\n`•` Need 24/7 support? <#712154540576866354>\n`•` Get personalized support: <#915302513127874611>\n`•` Introduce yourself: <#992842655346196490>\n`•` Download our Mobile App: <#991577591158947921>\n`•` Jumpstart your journey: <#598105432103583744> \n\n **Note:** You **must** respond in this welcome ticket to receive chat access.""", color=0xDB0B23)
     await setFooter(sendEmbed)
 
     view = View(timeout = None)
-    view.add_item(brandNewButton)
-    view.add_item(beginnerButton)
-    view.add_item(intermediateButton)
-    view.add_item(advancedButton)
+    view.add_item(customizeButton)
+    view.add_item(supportButton)
+    view.add_item(jumpstartButton)
 
-    brandNewButton.callback = brandNew_callback
-    beginnerButton.callback = beginner_callback
-    intermediateButton.callback = intermediate_callback
-    advancedButton.callback = advanced_callback
+    # customizeButton.callback = brandNew_callback
+    # supportButton.callback = beginner_callback
+    # jumpstartButton.callback = intermediate_callback
 
     await ch.send("**Woohoo! You're now a part of the Notify community** <@!" + str(user.id) + ">!")
     await ch.send( embed=sendEmbed, view = view)

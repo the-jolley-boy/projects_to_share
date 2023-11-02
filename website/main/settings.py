@@ -28,12 +28,22 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', cast=bool)
 
+if DEBUG:
+    REDIRECT_URI = 'http://127.0.0.1:8000/notify/login/redirect'
+else:
+    REDIRECT_URI = 'https://kianjolley.com/notify/login/redirect'
+
 ALLOWED_HOSTS = [
     'portfolio-website-kian.herokuapp.com',
     'kianjolley.com',
     '.kianjolley.com',
     'www.kianjolley.com'
     '127.0.0.1',
+]
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'discordlogin.auth.DiscordAuthenticationBackend',
 ]
 
 # Application definition
@@ -47,6 +57,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
     'django.contrib.sitemaps',
+    'discordlogin.apps.DiscordloginConfig',
 
     #other
     'tailwind',
