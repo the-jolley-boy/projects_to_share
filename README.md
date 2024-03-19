@@ -1,3 +1,3 @@
 # website_project_code
 
-This repo contains code I have made for projects that I am ok with sharing that doesn't contain anything private that I don't want/have permission to share.
+The code for most of these is old but is still linked in some of my website project posts. If you would like to see more updated code and working examples, check out my website https://www.kianjolley.com
