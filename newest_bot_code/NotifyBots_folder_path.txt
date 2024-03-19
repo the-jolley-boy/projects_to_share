@@ -1,0 +1,22 @@
+|-- NotifyBots/
+|   |-- .env
+|   |-- Jarvis.py
+|   |-- Notify1on1Bot.py
+|   |-- NotifyPinger.py
+|   |-- NotifyRolePuller.py
+|   |-- NotifyTracker.py
+|   |-- NotifyUtilities.py
+|   |-- database/
+|   |   |-- dbaccess.py
+|   |-- embeds/
+|   |   |-- embeds.py
+|   |-- global_vars/
+|   |   |-- global_vars.py
+|   |-- logs/
+|   |-- utils/
+|   |   |-- one_on_one_utils.py
+|   |   |-- pinger_utils.py
+|   |   |-- survey_utils.py
+|   |   |-- tracker_utils.py
+|   |   |-- utilities_utils.py
+|   |-- whop_reviews.py
