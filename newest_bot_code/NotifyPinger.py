@@ -11,12 +11,20 @@ import string
 from discord import app_commands
 import psycopg
 import datetime
+import logging
 from dotenv import load_dotenv
 load_dotenv()
 
 from global_vars.global_vars import GlobalVariables
 from utils import pinger_utils
 from embeds import embeds
+
+logger = logging.getLogger('discord')
+logger.setLevel(logging.INFO)
+log_file_path = os.path.join('logs', 'pingerbotlog.log')
+file_handler = logging.FileHandler(filename=log_file_path, encoding='utf-8', mode='a')
+file_handler.setFormatter(logging.Formatter('%(asctime)s:%(levelname)s:%(name)s: %(message)s'))
+logger.addHandler(file_handler)
 
 #Bot Token
 TOKEN = os.environ.get('PINGER_TOKEN')
@@ -38,7 +46,16 @@ class Client(discord.Client):
             await client.sync()
             self.synced = True
         await pinger_utils.setchannelpinger()
-        print(f'{self.user} has connected to Discord!')
+        print(f'[{datetime.datetime.now()}] | {self.user} has connected (ready) to Discord!')
+
+    async def on_connect(self):
+        print(f'[{datetime.datetime.now()}] | {self.user} has connected to Discord!')
+
+    async def on_resumed(self):
+        print(f'[{datetime.datetime.now()}] | {self.user} has resumed connection to Discord!')
+
+    async def on_disconnect(self):
+        print(f'[{datetime.datetime.now()}] | {self.user} has disconnected from Discord!')
 
 Client = Client()
 client = app_commands.CommandTree(Client)
@@ -127,4 +144,4 @@ async def on_message(msg):
                     await channel.send(message)
                     break
 
-Client.run(TOKEN)
+Client.run(TOKEN, log_handler=None)

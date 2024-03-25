@@ -3,7 +3,7 @@ import discord
 from discord import app_commands
 import asyncio
 import datetime
-from datetime import date
+import logging
 from dotenv import load_dotenv
 load_dotenv()
 
@@ -11,6 +11,13 @@ from global_vars.global_vars import GlobalVariables
 from database import dbaccess
 from utils import tracker_utils
 from embeds import embeds
+
+logger = logging.getLogger('discord')
+logger.setLevel(logging.INFO)
+log_file_path = os.path.join('logs', 'trackerbotlog.log')
+file_handler = logging.FileHandler(filename=log_file_path, encoding='utf-8', mode='a')
+file_handler.setFormatter(logging.Formatter('%(asctime)s:%(levelname)s:%(name)s: %(message)s'))
+logger.addHandler(file_handler)
 
 #Bot Token
 TOKEN = os.environ.get('TRACKER_TOKEN')
@@ -31,12 +38,21 @@ class Client(discord.Client):
         if not self.synced:
             await client.sync()
             self.synced = True
-        print(f'{self.user} has connected to Discord!')
+        print(f'[{datetime.datetime.now()}] | {self.user} has connected (ready) to Discord!')
 
         #sets some variables used in welcome.py
         await tracker_utils.set_vars(Client)
 
         await asyncio.gather(tracker_utils.tracker(), tracker_utils.checker(), tracker_utils.muted(), tracker_utils.reviews())
+
+    async def on_connect(self):
+        print(f'[{datetime.datetime.now()}] | {self.user} has connected to Discord!')
+
+    async def on_resumed(self):
+        print(f'[{datetime.datetime.now()}] | {self.user} has resumed connection to Discord!')
+
+    async def on_disconnect(self):
+        print(f'[{datetime.datetime.now()}] | {self.user} has disconnected from Discord!')
 
 Client = Client()
 client = app_commands.CommandTree(Client)
@@ -161,6 +177,6 @@ async def on_message(msg):
     if ('please respond to each prompt to properly **host and track** your transaction.' in msg.content) and (msg.channel.category_id == ADMINCATEGORY):
         await tracker_utils.marketplace_initial(msg)
 
-Client.run(TOKEN)
+Client.run(TOKEN, log_handler=None)
 
 #END

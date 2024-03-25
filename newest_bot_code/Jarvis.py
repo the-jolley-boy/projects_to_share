@@ -5,7 +5,6 @@ import logging
 import asyncio
 from discord.ui import Button, View
 import datetime
-from datetime import date
 import io
 from discord import app_commands
 from dotenv import load_dotenv
@@ -14,8 +13,12 @@ from database import dbaccess
 from utils import survey_utils
 from embeds import embeds
 
-log_file_path = os.path.join('logs', 'jarvis.log')
-logging.basicConfig(level=os.environ.get("LOGLEVEL", "DEBUG"), filename=log_file_path, filemode='a', format='%(asctime)s - [Line:%(lineno)d - Function:%(funcName)s In:%(filename)s From:%(name)s] \n[%(levelname)s] - %(message)s \n', datefmt='%d-%b-%y %H:%M:%S')
+logger = logging.getLogger('discord')
+logger.setLevel(logging.INFO)
+log_file_path = os.path.join('logs', 'Jarvisbotlog.log')
+file_handler = logging.FileHandler(filename=log_file_path, encoding='utf-8', mode='a')
+file_handler.setFormatter(logging.Formatter('%(asctime)s:%(levelname)s:%(name)s: %(message)s'))
+logger.addHandler(file_handler)
 
 #Bot Token
 load_dotenv()
@@ -54,7 +57,17 @@ class Client(discord.Client):
 
         await survey_utils.set_vars(Client)
 
-        print(f'{self.user} has connected to Discord!')
+        print(f'[{datetime.datetime.now()}] | {self.user} has connected (ready) to Discord!')
+
+    async def on_connect(self):
+        print(f'[{datetime.datetime.now()}] | {self.user} has connected to Discord!')
+
+    async def on_resumed(self):
+        print(f'[{datetime.datetime.now()}] | {self.user} has resumed connection to Discord!')
+
+    async def on_disconnect(self):
+        print(f'[{datetime.datetime.now()}] | {self.user} has disconnected from Discord!')
+
 
 Client = Client()
 client = app_commands.CommandTree(Client)
@@ -337,17 +350,14 @@ async def on_member_join(member):
     try:
         ch = await GUILD.create_text_channel("welcome-" + str(member), overwrites=overwrites, category=discord.utils.get(GUILD.categories, id=1084368328673476608))
     except Exception as e:
-        logging.info("Error, exception 1: " + str(e))
         if "Maximum number of channels in category reached (50)" in str(e):
             try:
                 ch = await GUILD.create_text_channel("welcome-" + str(member), overwrites=overwrites, category=discord.utils.get(GUILD.categories, id=1086427580166590514))
             except Exception as e:
-                logging.info("Error, exception 2: " + str(e))
                 if "Maximum number of channels in category reached (50)" in str(e):
                     try:
                         ch = await GUILD.create_text_channel("welcome-" + str(member), overwrites=overwrites, category=discord.utils.get(GUILD.categories, id=1087054788300124311))
                     except Exception as e:
-                        logging.info("Error, exception 3: " + str(e))
                         print("Error, final exception: " + str(e))
 
     embedVar = await embeds.welcome_ticket(member)
@@ -421,4 +431,4 @@ async def fourtyNine_six_callback(interaction):
 
     await interaction.channel.send( embed=embedVar)
 
-Client.run(token)
+Client.run(token, log_handler=None)

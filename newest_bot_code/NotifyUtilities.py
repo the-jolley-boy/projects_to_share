@@ -12,10 +12,19 @@ from discord.utils import get
 import random
 from github import Github
 from dotenv import load_dotenv
+import logging
+import datetime
 load_dotenv()
 
 from utils import utilities_utils
 from embeds import embeds
+
+logger = logging.getLogger('discord')
+logger.setLevel(logging.INFO)
+log_file_path = os.path.join('logs', 'utilitiesbotlog.log')
+file_handler = logging.FileHandler(filename=log_file_path, encoding='utf-8', mode='a')
+file_handler.setFormatter(logging.Formatter('%(asctime)s:%(levelname)s:%(name)s: %(message)s'))
+logger.addHandler(file_handler)
 
 #Bot Token
 TOKEN = os.environ.get('UTILITIES_TOKEN')
@@ -32,10 +41,19 @@ class Client(discord.Client):
         if not self.synced:
             await client.sync()
             self.synced = True
-        print(f'{self.user} has connected to Discord!')
+        print(f'[{datetime.datetime.now()}] | {self.user} has connected (ready) to Discord!')
 
         #sets some variables used in welcome.py
         await utilities_utils.set_vars(Client)
+
+    async def on_connect(self):
+        print(f'[{datetime.datetime.now()}] | {self.user} has connected to Discord!')
+
+    async def on_resumed(self):
+        print(f'[{datetime.datetime.now()}] | {self.user} has resumed connection to Discord!')
+
+    async def on_disconnect(self):
+        print(f'[{datetime.datetime.now()}] | {self.user} has disconnected from Discord!')
 
 Client = Client()
 client = app_commands.CommandTree(Client)
@@ -388,4 +406,4 @@ async def on_message(msg):
                 await ch.send("Hey, please include the price in your WTS post, I check for the use of a '$', 'shipped', or 'shipping' to make sure there is a price so please include at least a '$', I have attached your deleted message for you to update.")
                 await ch.send("`" + msg.content + "`")
 
-Client.run(TOKEN)
+Client.run(TOKEN, log_handler=None)

@@ -6,10 +6,19 @@ from discord import app_commands
 import psycopg
 from psycopg import sql
 from dotenv import load_dotenv
+import logging
+import datetime
 
 from global_vars.global_vars import GlobalVariables
 from utils import one_on_one_utils
 from database import dbaccess
+
+logger = logging.getLogger('discord')
+logger.setLevel(logging.INFO)
+log_file_path = os.path.join('logs', '1on1botlog.log')
+file_handler = logging.FileHandler(filename=log_file_path, encoding='utf-8', mode='a')
+file_handler.setFormatter(logging.Formatter('%(asctime)s:%(levelname)s:%(name)s: %(message)s'))
+logger.addHandler(file_handler)
 
 load_dotenv()
 TOKEN = os.environ.get('ONE_ON_ONE_TOKEN')
@@ -32,12 +41,21 @@ class Client(discord.Client):
         if not self.synced:
             await client.sync()
             self.synced = True
-        print(f'{self.user} has connected to Discord!')
+        print(f'[{datetime.datetime.now()}] | {self.user} has connected (ready) to Discord!')
 
         GlobalVariables().advisorDict = await one_on_one_utils.get_all_values()
 
         Client.add_view(one_on_one_utils.AdvisorMain())
         Client.add_view(one_on_one_utils.StaffView(category=0))
+
+    async def on_connect(self):
+        print(f'[{datetime.datetime.now()}] | {self.user} has connected to Discord!')
+
+    async def on_resumed(self):
+        print(f'[{datetime.datetime.now()}] | {self.user} has resumed connection to Discord!')
+
+    async def on_disconnect(self):
+        print(f'[{datetime.datetime.now()}] | {self.user} has disconnected from Discord!')
 
 Client = Client()
 client = app_commands.CommandTree(Client)
@@ -70,4 +88,4 @@ async def on_message(message):
 
         await one_on_one_utils.initial_func(message.channel)
 
-Client.run(TOKEN)
+Client.run(TOKEN, log_handler=None)
